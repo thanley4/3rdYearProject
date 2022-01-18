@@ -31,6 +31,10 @@ from utils.general import (LOGGER, apply_classifier, check_file, check_img_size,
 from utils.plots import Annotator, colors
 from utils.torch_utils import load_classifier, select_device, time_sync
 
+import math
+import random
+from PIL import Image, ImageDraw
+
 # Custom Code
 
 total_sensor_height_mm = 2.76  # mm
@@ -39,6 +43,8 @@ total_sensor_height_pixels = 2464  # pixels
 total_sensor_width_pixels = 3280  # pixels
 sensor_focal_length_mm = 3.04  # mm
 sensor_field_of_view_degrees = 62.2  # degrees
+
+objects_in_frame = []
 
 object_names = ["person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
                 "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow",
@@ -58,15 +64,35 @@ def object_distance(object_id, object_height_pixels):
         distance_to_object = round(object_heights[object_id] * sensor_focal_length_mm / object_height_on_sensor_mm, 3)
         print(object_names[object_id], " is ", distance_to_object, "meters away")
     else:
-        distance_to_object = "N/A"
+        distance_to_object = 100
     return distance_to_object
+
 
 def object_angle(object_id, x_location):
     angle_to_object = round((x_location - (total_sensor_width_pixels / 2)) * (sensor_field_of_view_degrees / total_sensor_width_pixels), 3)
     print(object_names[object_id], " is @ ", angle_to_object, "°")
     return angle_to_object
 
-#Custom Code
+
+class Object:
+    def __init__(self, distance, angle):
+        self.distance = distance
+        self.angle = angle
+
+
+def drawObjects(objects, image_path, output_path):
+    image = Image.open(image_path)
+    draw = ImageDraw.Draw(image)
+    colors = ["red", "green", "blue", "yellow", "purple", "orange"]
+    for i in objects:
+        x = 960 + i.distance * 10 * math.sin(math.radians(i.angle))
+        y = 900 - i.distance * 10 * math.cos(math.radians(i.angle))
+        draw.rectangle((x - 50, y - 50, x + 50, y + 50), fill = random.choice(colors))
+    image.save(output_path)
+    image.show(image)
+
+
+#  Custom Code
 
 @torch.no_grad()
 def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
@@ -178,6 +204,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         model(torch.zeros(1, 3, *imgsz).to(device).type_as(next(model.parameters())))  # run once
     dt, seen = [0.0, 0.0, 0.0], 0
     for path, img, im0s, vid_cap, s in dataset:
+        objects_in_frame.clear()
         t1 = time_sync()
         if onnx:
             img = img.astype('float32')
@@ -269,7 +296,10 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
                         c = int(cls)  # integer class
                         height_in_pixels = int(xyxy[3] - xyxy[1])
                         x_location = float(((xyxy[2] - xyxy[0]) / 2) + xyxy[0])
-                        label = None if hide_labels else (names[c] if hide_conf else f'{object_distance(c, height_in_pixels)} {object_angle(c, x_location)} {names[c]} {conf:.2f}')
+                        distance = object_distance(c, height_in_pixels)
+                        angle = object_angle(c, x_location)
+                        objects_in_frame.append(Object(distance, angle))
+                        label = None if hide_labels else (names[c] if hide_conf else f'{distance} {angle} {names[c]} {conf:.2f}')
                         annotator.box_label(xyxy, label, color=colors(c, True))
                         if save_crop:
                             save_one_box(xyxy, imc, file=save_dir / 'crops' / names[c] / f'{p.stem}.jpg', BGR=True)
@@ -287,6 +317,8 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
             if save_img:
                 if dataset.mode == 'image':
                     cv2.imwrite(save_path, im0)
+                    print(save_path)
+                    drawObjects(objects_in_frame, "Field_of_View.jpg", "FOV.jpg")
                 else:  # 'video' or 'stream'
                     if vid_path[i] != save_path:  # new video
                         vid_path[i] = save_path
