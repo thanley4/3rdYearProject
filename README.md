@@ -1,6 +1,6 @@
 # 3rd Year Project - Object Detection for Autonomous Vehicles
 
-## Installing
+## Installing YOLOv5 / YOLOv5-Lite
 
 `git clone https://github.com/thanley4/yolov5`
 or
@@ -49,6 +49,21 @@ tqdm>=4.41.0
 `cd YOLOv5-Lite`
 or
 `cd yolov5`
+
+`python3 detect.py --source 0`
+
+
+## Running surround_view.py w/ Webcam/Raspberry Pi Camera Module (YOLOv5 only)
+
+`git clone https://github.com/thanley4/3rdYearProject/`
+
+`cd 3rdYearProject`
+
+`python3 surround_view.py`
+
+In a seperate command window/terminal
+
+`cd YOLOv5`
 
 `python3 detect.py --source 0`
 
