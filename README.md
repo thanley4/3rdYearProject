@@ -6,7 +6,7 @@ In recent years, autonomous driving and the integration of sensors into cars has
 
 This project aims to do this computation on a commercial off-the-shelf system that can be embedded into a car, with potential for further expansion to cover up to the full 360° field of vision. 
 
-## Object Detection
+## Road Monitoring
 
 ![image](https://user-images.githubusercontent.com/93823322/155022151-165847e3-7d62-44d9-99dd-51b0b367f47d.png)
 
@@ -25,6 +25,19 @@ The data obtained from the individual Raspberry Pi and Camera Module can be conv
 Basic object memory is implemented here, allowing for the speed of each object to calculated, giving the ‘autonomous’ vehicle even more data to work with. 
 
 This application can, in conjunction with the data from the driver monitoring, to help warn the driver of impending collisions or dangers and could theoretically even allow for reactions to certain situations if implemented in an autonomous vehicle. 
+
+## Driver Monitoring
+
+OpenCV object detection works by taking in an image that has been converted into a grayscale image and using a Haar Cascade Classifier to detect if the object is in the image. This Haar Classifier is an algorithm that has been trained using 'positives' and 'negatives', where the 'positives' are images of the object one wishes to detect, and 'negatives' are other images that don't contain the object.
+
+In this case we use two Haar Classifiers; one for facial detection and another for eye detection. For an eye to be detected, it must be found within the bounds of a detected face, which prevents many false positives.
+
+The video stream from the camera that is facing the driver provides the images to monitor how awake they are. If the driver is noticed to be blinking more or for longer than the average person then they will be alerted that they are not as awake as they should be.
+
+If the object detection outside of the vehicle notices  that the vehicle is getting too close to outside objects, such as people or other vehicles, the sensitivity of the driver monitoring system will be increased. This ensures the driver is awake enough to react to any threats on the road.
+
+This means that the Raspberry Pis used for Driver Monitoring and Object Detection are connected and signals are able to be sent from one to the other.
+
 
 ## Hardware
 
@@ -105,6 +118,8 @@ or
 `python3 surround_view.py`
 
 In a seperate command window/terminal
+
+Check IP Addresses match the Local IP/Network IP in surround_view.py and detect.py
 
 `cd YOLOv5`
 
