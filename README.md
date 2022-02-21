@@ -1,5 +1,48 @@
 # 3rd Year Project - Object Detection for Autonomous Vehicles
 
+## Project Abstract
+
+In recent years, autonomous driving and the integration of sensors into cars has been a growing trend. This project utilises computer vision looking both inward (at the driver), and outwards (at the road, pedestrians, other cars, etc.) to make driving safer. 
+
+This project aims to do this computation on a commercial off-the-shelf system that can be embedded into a car, with potential for further expansion to cover up to the full 360° field of vision. 
+
+## Object Detection
+
+![image](https://user-images.githubusercontent.com/93823322/155022151-165847e3-7d62-44d9-99dd-51b0b367f47d.png)
+
+YOLO Object detection works in 3 steps first dividing the image into a grid, checking if an object, or part of an object, is likely to exist in that square. If the probability is high enough, YOLO will interpret it as an object of the detected class, and then the original image/video can be annotated by drawing a box around that item and labelling it.
+
+While seeing objects is all well and good, it is crucial to be able to tell where they are. Therefore, using the specifications of the Raspberry Pi’s Camera Module, the distance to each object and the angle at which they are to the camera can then be calculated. 
+
+This concludes the information recorded by the Object Detection Module, and so the data can be passed on to the surround view system via ethernet
+
+## Surround View
+
+![image](https://user-images.githubusercontent.com/93823322/155022253-d4c3cdbd-b9ab-4a21-9dc2-d0e1895de866.png)
+
+The data obtained from the individual Raspberry Pi and Camera Module can be converted into coordinates relative to the car. These are plotted on a diagram to display the different objects in the vehicle’s current field of view. 
+
+Basic object memory is implemented here, allowing for the speed of each object to calculated, giving the ‘autonomous’ vehicle even more data to work with. 
+
+This application can, in conjunction with the data from the driver monitoring, to help warn the driver of impending collisions or dangers and could theoretically even allow for reactions to certain situations if implemented in an autonomous vehicle. 
+
+## Hardware
+
+The Raspberry Pi 4 8GB, along with its Camera Module, was chosen as the embedded system of choice due to its affordability despite its lack of processing capabilities
+
+## Software
+
+![image](https://user-images.githubusercontent.com/93823322/155022458-eec976e1-46fe-4f79-8085-ca2b3383c2ee.png)
+
+You Only Look Once v5 (YOLOv5) is a lightweight object detection algorithm designed to be used in real time. YOLOv5 was chosen as it contains many different variants, including YOLOv5-nano, a much smaller and hence less computationally complex model of YOLO. 
+
+YOLOv5 is also the most up to date version with an active development community.
+
+![image](https://user-images.githubusercontent.com/93823322/155022481-fc620fb1-4396-4747-9268-9f80523607c1.png)
+
+OpenCV or Open Source Computer Vision Library, is an extensive library mostly targeting real-time computer vision applications. With C++, Python and Java interfaces, along with support for all major operating systems, OpenCV is incredibly popular in the computer vision world. 
+
+
 ## Installing YOLOv5 / YOLOv5-Lite
 
 `git clone https://github.com/thanley4/yolov5`
