@@ -163,9 +163,24 @@ In a seperate command window/terminal
 
 `python3 detect.py --source 0`
  
+</details>
+
 
 </details>
 
+<details closed>
+<summary>Installing Driver Monitoring</summary>
+  
+## Installing Driver Monitoring
+  
+</details>
+
+<details closed>
+<summary>Running Driver Monitoring</summary>
+  
+## Running Driver Monitoring
+  
+</details>
 
 ## Original Repositories
 
