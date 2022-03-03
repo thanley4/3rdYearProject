@@ -132,6 +132,11 @@ torchvision
 
 tqdm>=4.41.0
 ```
+  
+</details>
+
+<details closed>
+<summary>Running YOLOv5 / YOLOv5-Lite</summary>
 
 ## Running w/ Webcam/Raspberry Pi Camera Module
 
@@ -147,12 +152,12 @@ or
 `git clone https://github.com/thanley4/3rdYearProject/`
 
 `cd 3rdYearProject`
+ 
+Check IP Addresses match the Local IP/Network IP in surround_view.py and detect.py
 
 `python3 surround_view.py`
 
 In a seperate command window/terminal
-
-Check IP Addresses match the Local IP/Network IP in surround_view.py and detect.py
 
 `cd YOLOv5`
 
