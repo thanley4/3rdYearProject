@@ -10,34 +10,39 @@ This project aims to do this computation on a commercial off-the-shelf system th
 
 <details closed>
 <summary>Road Monitoring</summary>
+  
+## Road Monitoring
 
 ![image](https://user-images.githubusercontent.com/93823322/155022151-165847e3-7d62-44d9-99dd-51b0b367f47d.png)
 
 YOLO Object detection works in 3 steps first dividing the image into a grid, checking if an object, or part of an object, is likely to exist in that square. If the probability is high enough, YOLO will interpret it as an object of the detected class, and then the original image/video can be annotated by drawing a box around that item and labelling it.
-
+  
 While seeing objects is all well and good, it is crucial to be able to tell where they are. Therefore, using the specifications of the Raspberry Pi’s Camera Module, the distance to each object and the angle at which they are to the camera can then be calculated. 
-
-This concludes the information recorded by the Object Detection Module, and so the data can be passed on to the surround view system via ethernet
+  
+This concludes the information recorded by the Object Detection Module, and so the data can be passed on to the surround view system via ethernet. 
 
 </details>
 
 <details closed>
 <summary>Surround View</summary>
+  
+## Surround View
 
 ![image](https://user-images.githubusercontent.com/93823322/155022253-d4c3cdbd-b9ab-4a21-9dc2-d0e1895de866.png)
 
 The data obtained from the individual Raspberry Pi and Camera Module can be converted into coordinates relative to the car. These are plotted on a diagram to display the different objects in the vehicle’s current field of view. 
-
-Basic object memory is implemented here, allowing for the speed of each object to calculated, giving the ‘autonomous’ vehicle even more data to work with. 
-
-This application can, in conjunction with the data from the driver monitoring, to help warn the driver of impending collisions or dangers and could theoretically even allow for reactions to certain situations if implemented in an autonomous vehicle. 
+  
+Basic object memory is implemented here, allowing for the speed of each object to calculated, giving the vehicle’s ‘brain’ even more data to work with. 
+This application can, in conjunction with the data from the driver monitoring, to help warn the driver of impending collisions or dangers and could theoretically even allow for reactions to certain situations if implemented in an autonomous vehicle.  
 
 </details>
 
 <details closed>
 <summary>Driver Monitoring</summary>
   
-![image](https://user-images.githubusercontent.com/93823322/156553818-ef8eb21c-b8be-47f5-94dc-c418693c5cac.png)
+## Driver Monitoring
+  
+![image](https://user-images.githubusercontent.com/93823322/156554784-50cd817c-4f5a-48f0-99b6-99550002c273.png)
 
 OpenCV object detection works by taking in an image that has been converted into grayscale and using a Haar-Cascade Classifier to detect if the object is in the image. This Haar Classifier is an algorithm that has been trained using 'positives' and 'negatives', where the 'positives' are images of the object one wishes to detect, and 'negatives' are other images that don't contain the object.
   
@@ -53,13 +58,21 @@ If the object detection outside of the vehicle notices that the vehicle is getti
 
 <details closed>
 <summary>Hardware</summary>
+  
+## Hardware
 
-The Raspberry Pi 4 8GB, along with its Camera Module, was chosen as the embedded system of choice due to its affordability despite its lack of processing capabilities
+<p>
+   <img height="350" src="https://user-images.githubusercontent.com/93823322/156555082-ea35a796-018c-465a-b47c-142308561258.png"></a>
+</p>
+  
+The Raspberry Pi 4 8GB, along with its Camera Module, was chosen as the embedded system of choice due to its affordability despite its lack of processing capabilities. 
 
 </details>
 
 <details closed>
 <summary>Software</summary>
+  
+## Software
 
 ![image](https://user-images.githubusercontent.com/93823322/155022458-eec976e1-46fe-4f79-8085-ca2b3383c2ee.png)
 
