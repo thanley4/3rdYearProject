@@ -93,6 +93,8 @@ YOLOv5 => https://github.com/ultralytics/yolov5
 
 YOLOv5-Lite => https://github.com/ppogg/YOLOv5-Lite
 
+Q-Engineering => https://github.com/Qengineering
+
 torch 1.8.0 for Raspberry Pi 4B => https://github.com/sungjuGit/PyTorch-and-Vision-for-Raspberry-Pi-4B
 
 torchvision 0.9.0 for Raspberry Pi 4B => https://github.com/sungjuGit/PyTorch-and-Vision-for-Raspberry-Pi-4B
